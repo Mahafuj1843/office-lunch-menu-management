@@ -109,7 +109,7 @@ export const allMenus = async (req, res, next) => {
                 take: Number(perPage)
             })
 
-            // To get total post
+            // To get total menu
             totalMenus = await prisma.menus.count({
                 where: {
                     date: {
