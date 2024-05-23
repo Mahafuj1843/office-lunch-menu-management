@@ -8,7 +8,6 @@ class HashHelper {
     }
 
     checkHash(givenValue, oldValue){
-        console.log(bcrypt.compare(givenValue, oldValue))
         return bcrypt.compare(givenValue, oldValue);
     }
 }

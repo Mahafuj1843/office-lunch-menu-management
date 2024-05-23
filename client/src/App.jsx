@@ -4,14 +4,33 @@ import './App.css'
 import { Toaster } from "react-hot-toast";
 import LazyLoader from "./components/LazyLoader";
 import ScreenLoader from "./components/ScreenLoader";
+
+const RegistrationPage = lazy(() => import("./pages/RegistrationPage"));
+const LoginPage = lazy(() => import("./pages/LoginPage"));
 const MenuPage = lazy(() => import("./pages/MenuPage"));
 
 function App() {
 
-  return (
+  return ( 
     <Fragment>
       <BrowserRouter>
         <Routes>
+          <Route
+            path="/register"
+            element={
+              <Suspense fallback={<LazyLoader />}>
+                <RegistrationPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <Suspense fallback={<LazyLoader />}>
+                <LoginPage />
+              </Suspense>
+            }
+          />
           <Route
             path="/"
             element={
