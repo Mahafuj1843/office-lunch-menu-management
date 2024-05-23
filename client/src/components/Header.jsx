@@ -1,21 +1,27 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { getToken, getUserDetails } from '../helpers/sessionHelper'
 import { Link } from 'react-router-dom';
+import { LogoutRequest } from '../apiRequests/authRequest';
 
-const Navbar = () => {
+const Header = () => {
     const [myMenu, setMyMenu] = useState(false);
+
+    const onLogout = async () => {
+        const result = await LogoutRequest();
+        if (result) window.location.href = '/'
+    }
 
     return (
         <Fragment>
             <div className="z-50 fixed top-0 flex items-center justify-between w-full bg-white border-b shadow-sm py-4 px-[1rem] md:px-[2rem] lg:px-[5rem]">
                 <Link to="/" className='text-xl font-bold'>LunchHub</Link>
-                {/* {
-                    getToken() ? */}
-                        {/* <div className="absolute inset-y-0 right-0 flex items-center gap-1.5 md:gap-3 pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                            <!-- Profile dropdown -->
+                {
+                    getToken() ?
+                        <div className="absolute inset-y-0 right-0 flex items-center gap-1.5 md:gap-3 pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                            {/* <!-- Profile dropdown --> */}
                             <div className="relative">
                                 <button onClick={() => setMyMenu(!myMenu)} type="button" className="flex items-center justify-center rounded-full bg-purple-800 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-400" id="user-menu-button">
-                                    <p className="h-8 w-8 rounded-full text-lg font-semibold text-white mt-0.5">{getUserDetails().username.slice(0, 1).toUpperCase()}</p>
+                                    <p className="h-8 w-8 rounded-full text-lg font-semibold text-white mt-0.5">{getUserDetails().name.slice(0, 1).toUpperCase()}</p>
                                 </button>
 
                                 <div onBlur={() => setMyMenu(!myMenu)} className={`${myMenu ? "block" : "hidden"} absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none transition-all ease-out duration-100`} role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
@@ -29,8 +35,8 @@ const Navbar = () => {
                                     </button>
                                 </div>
                             </div>
-                        </div> */}
-                        {/* : */}
+                        </div>
+                        :
                         <div className="absolute inset-y-0 right-0 flex items-center  gap-2 md:gap-4 text-sm md:text-base pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                             <Link to="/login" className="relative rounded-md border border-gray-400 py-1 px-2 cursor-pointer">
                                 Sign in
@@ -39,10 +45,10 @@ const Navbar = () => {
                                 Sign up
                             </Link>
                         </div>
-                {/* } */}
+                }
             </div >
         </Fragment >
     )
 }
 
-export default Navbar
+export default Header
