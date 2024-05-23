@@ -6,6 +6,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
 }
 
 datasource db {
@@ -34,6 +35,7 @@ model Users {
 model Menus {
   id        Int       @id @default(autoincrement())
   title     String    @unique
+  desc      String
   date      DateTime
   extras    String[]
   createdAt DateTime  @default(now())
