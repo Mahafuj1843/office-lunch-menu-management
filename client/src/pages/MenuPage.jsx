@@ -3,7 +3,7 @@ import AppWrapper from '../components/AppWrapper'
 import MenuCard from '../components/MenuCard'
 import Pagination from '../components/Pagination'
 import { useSelector } from 'react-redux'
-import { menuListRequest } from '../apiRequest/menuRequest'
+import { todayMenuListRequest } from '../apiRequest/menuRequest'
 import SelectMenuModel from '../components/models/SelectMenuModel'
 
 const MenuPage = () => {
@@ -37,10 +37,10 @@ const MenuPage = () => {
 
     useEffect(() => {
         (async () => {
-            await menuListRequest(pageNo + 1, perPage, searchKey);
+            await todayMenuListRequest(pageNo + 1, perPage, searchKey);
         })();
     }, [pageNo, perPage, searchKey])
-    
+
     return (
         <AppWrapper>
             <SelectMenuModel showPopup={showPopup} setShowPopup={setShowPopup} />
@@ -59,14 +59,21 @@ const MenuPage = () => {
                             <input type="search" onChange={searchKeywordOnChange} id="search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm outline-none rounded-lg focus:ring-gray-300 focus:border-gray-300 block w-full lg:w-[250px] px-2.5 py-2  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search Name" required />
                         </div>
                     </div>
-                    <div className='py-2 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3'>
-                        {
-                            Menus.map((menu, i) =>
-                                <MenuCard menu={menu} key={i} setShowPopup={setShowPopup} />
-                            )
-                        }
-                    </div>
-                    <Pagination pageNo={pageNo + 1} perPage={perPage} total={Total} handlePageClick={handlePageClick} />
+                    {
+                        Total ?
+                            <>
+                                <div className='py-2 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3'>
+                                    {
+                                        Menus.map((menu, i) =>
+                                            <MenuCard menu={menu} key={i} setShowPopup={setShowPopup} />
+                                        )
+                                    }
+                                </div>
+                                <Pagination pageNo={pageNo + 1} perPage={perPage} total={Total} handlePageClick={handlePageClick} />
+                            </>
+                            :
+                            <h4 className='text-center font-semibold'>No data found</h4>
+                    }
                 </div>
             </div>
         </AppWrapper>
