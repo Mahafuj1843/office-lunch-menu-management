@@ -1,0 +1,71 @@
+import React, { Fragment, useState } from 'react'
+import { useSelector } from 'react-redux';
+
+const SelectMenuModel = ({ showPopup, setShowPopup }) => {
+    let Menu = useSelector((state) => (state.menu.menuDetails));
+    const [extras, setExtra] = useState([]);
+
+    const handleCheck = (ev, extraThing) => {
+        if (ev.target.checked) {
+            setExtra(prev => [...prev, extraThing]);
+        } else {
+            setExtra(prev => {
+                return prev.filter(e => e !== extraThing);
+            });
+        }
+    };
+
+    const onSubmit = () =>{
+        console.log(extras)
+    }
+
+    return (
+        <Fragment >
+            <div className="fixed h-screen w-full z-50 left-0 top-0 transition duration-300 ease-in-out" style={{ display: showPopup ? 'block' : 'none' }}>
+                <div onClick={() => setShowPopup(false)} className="fixed h-full w-full left-0 top-0 bg-black bg-opacity-50 z-[-1]"></div>
+                <div className="w-[95%] lg:w-2/6 h-fit my-6 mx-auto bg-white p-3 space-y-1 shadow-md rounded-lg border-4 border-spacing-4 border-gray-400">
+                    <button onClick={() => setShowPopup(false)} className='float-right text-black mb-2'>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-x-circle"><circle cx="12" cy="12" r="10" /><path d="m15 9-6 6" /><path d="m9 9 6 6" /></svg>
+                    </button>
+                    {/* <p className='w-full text-sm text-gray-600'>By
+                        <span className='font-medium text-black ms-1 capitalize'>{selectExecution?.submitBy ? selectExecution.submitBy.username : "unknow"}</span>,
+                        <span className='text-green-600 font-medium ms-1'>{selectExecution?.status}</span>
+                    </p> */}
+                    <div class="w-full bg-white border border-gray-200 rounded-lg overflow-y-auto"
+                        style={{ maxHeight: 'calc(100vh - 120px)' }}>
+                        <a href="#">
+                            <img class="rounded-t-lg" src="https://as1.ftcdn.net/v2/jpg/02/51/39/42/1000_F_251394284_Tn8Z8opzrQylClF7Nu8cuA26lf398oCS.jpg" alt="menu-img" />
+                        </a>
+                        <div class="px-2 md:px-5 py-2">
+                            <h5 class="mb-2 text-md md:text-lg font-bold tracking-tight text-gray-900 dark:text-white">{Menu.title}</h5>
+                            <p class="mb-3 text-sm font-light md:font-normal text-gray-700 dark:text-gray-400">{Menu.desc}</p>
+                            {Menu.extras?.length > 0 && (
+                                <div className="py-2">
+                                    <h3 className="text-center text-gray-700">Any extras?</h3>
+                                    {Menu.extras.map((extraThing, i) => (
+                                        <label
+                                            key={i}
+                                            className="flex items-center gap-2 p-4 border rounded-md mb-1">
+                                            <input
+                                                type="checkbox"
+                                                onChange={e => handleCheck(e, extraThing)}
+                                                // checked={selectedExtras.map(e => e._id).includes(extraThing._id)}
+                                                name={extraThing}
+                                            />
+                                            {extraThing}
+                                        </label>
+                                    ))}
+                                </div>
+                            )}
+                            <button onClick={()=>onSubmit()} class="w-full px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                Select
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </Fragment>
+    )
+}
+
+export default SelectMenuModel
