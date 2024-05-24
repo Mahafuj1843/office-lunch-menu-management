@@ -8,6 +8,7 @@ import ScreenLoader from "./components/ScreenLoader";
 const RegistrationPage = lazy(() => import("./pages/RegistrationPage"));
 const LoginPage = lazy(() => import("./pages/LoginPage"));
 const MenuPage = lazy(() => import("./pages/MenuPage"));
+const MenuListPage = lazy(() => import("./pages/admin/MenuListPage"));
 
 function App() {
 
@@ -36,6 +37,14 @@ function App() {
             element={
               <Suspense fallback={<LazyLoader />}>
                 <MenuPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/menuList"
+            element={
+              <Suspense fallback={<LazyLoader />}>
+                <MenuListPage />
               </Suspense>
             }
           />

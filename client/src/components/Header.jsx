@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { getToken, getUserDetails } from '../helpers/sessionHelper'
 import { Link } from 'react-router-dom';
-import { LogoutRequest } from '../apiRequests/authRequest';
+import { LogoutRequest } from '../apiRequest/authRequest';
 
 const Header = () => {
     const [myMenu, setMyMenu] = useState(false);
@@ -25,10 +25,22 @@ const Header = () => {
                                 </button>
 
                                 <div onBlur={() => setMyMenu(!myMenu)} className={`${myMenu ? "block" : "hidden"} absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none transition-all ease-out duration-100`} role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
-                                    <Link to="/my" className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-book-marked"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" /><polyline points="10 2 10 10 13 7 16 10 16 2" /></svg>
-                                        My Submission
-                                    </Link>
+                                    {
+                                        getUserDetails()?.role === "ADMIN" ?
+                                            <>
+                                                <Link to="/menuList" className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-book-marked"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" /><polyline points="10 2 10 10 13 7 16 10 16 2" /></svg>
+                                                    Menu List
+                                                </Link>
+                                            </>
+                                            :
+                                            <>
+                                                <Link to="/myChoice" className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-book-marked"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" /><polyline points="10 2 10 10 13 7 16 10 16 2" /></svg>
+                                                    My Choice
+                                                </Link>
+                                            </>
+                                    }
                                     <button onClick={onLogout} className="w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-200">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-arrow-left-from-line"><path d="m9 6-6 6 6 6" /><path d="M3 12h14" /><path d="M21 19V5" /></svg>
                                         Sign out
