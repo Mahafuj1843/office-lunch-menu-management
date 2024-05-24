@@ -145,6 +145,66 @@ export const singleMenus = async (req, res, next) => {
     }
 }
 
+export const menuList = async (req, res, next) => {
+    const pageNo = req.query.page > 0 ? req.query.page : 1;
+    const perPage = (req.query.limit > 0 && req.query.limit < 30) ? req.query.limit : 5;
+    const skip = (pageNo - 1) * perPage;
+    let menus, totalMenus
+
+    try {
+        if (req.query.querys.length) {
+            menus = await prisma.menus.findMany({
+                where: {
+                    title: {
+                        search: req.query.querys
+                    }
+                },
+                select: {
+                    id: true,
+                    title: true,
+                    date: true,
+                    desc: true,
+                },
+                orderBy: {
+                    date: "desc"
+                },
+                skip: Number(skip),
+                take: Number(perPage)
+            })
+
+            // To get total menu
+            totalMenus = await prisma.menus.count({
+                where: {
+                    title: {
+                        search: req.query.querys
+                    }
+                },
+            })
+        } else {
+            menus = await prisma.menus.findMany({
+                select: {
+                    id: true,
+                    title: true,
+                    desc: true,
+                    date: true,
+                },
+                orderBy: {
+                    date: "desc"
+                },
+                skip: Number(skip),
+                take: Number(perPage)
+            })
+
+            // To get total menu
+            totalMenus = await prisma.menus.count()
+        }
+
+        return res.status(200).json({ data: menus, totalMenus })
+    } catch (error) {
+        next(error)
+    }
+}
+
 export const updateMenu = async (req, res, next) => {
     const { title, desc, mDate, extras } = req.body
 
