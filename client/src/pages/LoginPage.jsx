@@ -24,9 +24,14 @@ const LoginPage = () => {
         }
         else {
             const result = await LoginRequest(user)
-            const intendedRoute = localStorage.getItem("intendedRoute") || "/";
+
             setTimeout(() => {
-                if (result) window.location.href = intendedRoute;
+                if (result) {
+                    if(JSON.parse(localStorage.getItem("UserDetails")).role === "ADMIN")
+                        window.location.href = "/menuList";
+                    else
+                        window.location.href = "/";
+                }
             }, 1500)
         }
     }

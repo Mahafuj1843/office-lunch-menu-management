@@ -4,6 +4,8 @@ import './App.css'
 import { Toaster } from "react-hot-toast";
 import LazyLoader from "./components/LazyLoader";
 import ScreenLoader from "./components/ScreenLoader";
+import AdminProtectedRoute from "./components/AdminProtectedRoute";
+import UserProtectedRoute from "./components/UserProtectedRoute";
 
 const RegistrationPage = lazy(() => import("./pages/RegistrationPage"));
 const LoginPage = lazy(() => import("./pages/LoginPage"));
@@ -15,7 +17,7 @@ const MyChoiceListPage = lazy(() => import("./pages/MyChoiceListPage"));
 
 function App() {
 
-  return ( 
+  return (
     <Fragment>
       <BrowserRouter>
         <Routes>
@@ -39,7 +41,7 @@ function App() {
             path="/"
             element={
               <Suspense fallback={<LazyLoader />}>
-                <MenuPage />
+                  <MenuPage />
               </Suspense>
             }
           />
@@ -47,7 +49,9 @@ function App() {
             path="/menuList"
             element={
               <Suspense fallback={<LazyLoader />}>
-                <MenuListPage />
+                <AdminProtectedRoute>
+                  <MenuListPage />
+                </AdminProtectedRoute>
               </Suspense>
             }
           />
@@ -55,7 +59,9 @@ function App() {
             path="/createMenu"
             element={
               <Suspense fallback={<LazyLoader />}>
-                <CreateUpdateMenuPage />
+                <AdminProtectedRoute>
+                  <CreateUpdateMenuPage />
+                </AdminProtectedRoute>
               </Suspense>
             }
           />
@@ -63,7 +69,9 @@ function App() {
             path="/updateMenu/:id"
             element={
               <Suspense fallback={<LazyLoader />}>
-                <CreateUpdateMenuPage />
+                <AdminProtectedRoute>
+                  <CreateUpdateMenuPage />
+                </AdminProtectedRoute>
               </Suspense>
             }
           />
@@ -71,7 +79,9 @@ function App() {
             path="/choiceList"
             element={
               <Suspense fallback={<LazyLoader />}>
-                <ChoiceListPage />
+                <AdminProtectedRoute>
+                  <ChoiceListPage />
+                </AdminProtectedRoute>
               </Suspense>
             }
           />
@@ -79,7 +89,9 @@ function App() {
             path="/myChoice"
             element={
               <Suspense fallback={<LazyLoader />}>
-                <MyChoiceListPage />
+                <UserProtectedRoute>
+                  <MyChoiceListPage />
+                </UserProtectedRoute>
               </Suspense>
             }
           />
