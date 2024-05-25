@@ -10,6 +10,8 @@ const LoginPage = lazy(() => import("./pages/LoginPage"));
 const MenuPage = lazy(() => import("./pages/MenuPage"));
 const MenuListPage = lazy(() => import("./pages/admin/MenuListPage"));
 const CreateUpdateMenuPage = lazy(() => import("./pages/admin/CreateUpdateMenuPage"));
+const ChoiceListPage = lazy(() => import("./pages/admin/ChoiceListPage"));
+const MyChoiceListPage = lazy(() => import("./pages/MyChoiceListPage"));
 
 function App() {
 
@@ -62,6 +64,22 @@ function App() {
             element={
               <Suspense fallback={<LazyLoader />}>
                 <CreateUpdateMenuPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/choiceList"
+            element={
+              <Suspense fallback={<LazyLoader />}>
+                <ChoiceListPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/myChoice"
+            element={
+              <Suspense fallback={<LazyLoader />}>
+                <MyChoiceListPage />
               </Suspense>
             }
           />

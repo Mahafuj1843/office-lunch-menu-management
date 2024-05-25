@@ -1,11 +1,20 @@
-import React, { useState } from 'react'
-import SelectMenuModel from './models/SelectMenuModel'
-import { MenuDetailsById } from '../apiRequest/menuRequest'
+import React from 'react'
+import { menuDetailsRequest } from '../apiRequest/menuRequest'
+import { getToken } from '../helpers/sessionHelper';
+import { useNavigate } from 'react-router-dom';
+import { ErrorToast } from '../helpers/formHelper';
 
 const MenuCard = ({ menu, setShowPopup }) => {
+    let navigate = useNavigate();
+
     const onSelectMenu = async (id) =>{
-        await MenuDetailsById(id);
-        setShowPopup(true);
+        if(getToken()){
+            await menuDetailsRequest(id);
+            setShowPopup(true);
+        }else{
+            ErrorToast("Please login first.")
+            navigate('/login')
+        }
     }
     return (
         <>
