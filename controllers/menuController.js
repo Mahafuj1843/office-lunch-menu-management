@@ -136,6 +136,7 @@ export const singleMenus = async (req, res, next) => {
                 id: true,
                 title: true,
                 desc: true,
+                date: true,
                 extras: true,
             }
         })
