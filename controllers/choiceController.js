@@ -93,7 +93,11 @@ export const myChoices = async (req, res, next) => {
         })
 
         // To get total choice
-        totalChoices = await prisma.choices.count()
+        totalChoices = await prisma.choices.count({
+            where: {
+                userId: req.user.id
+            }
+        })
         return res.status(200).json({ data: choices, totalChoices })
     } catch (error) {
         next(error)
