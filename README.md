@@ -62,7 +62,9 @@ Install node in local meachine.
 
 ## Setup instructions
 
-First, install all dependency for Backend:
+First, Add the username and password to the database URL in the .env file.
+ 
+Then, install all dependency for Backend:
 
 ```bash
 npm i
