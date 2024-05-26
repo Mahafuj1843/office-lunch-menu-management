@@ -13,26 +13,24 @@ export const RegistrationRequest = (user) => {
         if (res.status === 201) {
             SuccessToast("Registration Successfull.")
             return true;
-        } else {
-            ErrorToast("Something Went Wrong")
-            return false;
         }
+        ErrorToast("Something Went Wrong")
+        return false;
     }).catch((err) => {
         store.dispatch(hideLoader())
         if (err.response.data.status === 400) {
             ErrorToast(err.response.data.message)
             return false;
-        } else {
-            ErrorToast("Something Went Wrong")
-            return false;
         }
+        ErrorToast("Something Went Wrong")
+        return false;
     })
 }
 
 export const LoginRequest = (user) => {
     store.dispatch(showLoader())
     let URL = BaseURL + "/auth/login";
-    
+
     return axios.post(URL, user).then((res) => {
         store.dispatch(hideLoader())
         if (res.status === 200) {
@@ -40,23 +38,21 @@ export const LoginRequest = (user) => {
             setUserDetails(res.data.data)
             SuccessToast("Login Successfull.")
             return true;
-        } else {
-            ErrorToast("Something Went Wrong")
-            return false;
         }
+        ErrorToast("Something Went Wrong")
+        return false;
     }).catch((err) => {
         store.dispatch(hideLoader())
         if (err.response.data.status === 401 || err.response.data.status === 400) {
             ErrorToast(err.response.data.message)
             return false;
-        } else {
-            ErrorToast("Something Went Wrong")
-            return false;
         }
+        ErrorToast("Something Went Wrong")
+        return false;
     })
 }
 
-export const LogoutRequest = async() =>{
+export const LogoutRequest = async () => {
     store.dispatch(showLoader())
     let URL = BaseURL + "/auth/logout";
 
@@ -66,10 +62,9 @@ export const LogoutRequest = async() =>{
             removeSessions()
             SuccessToast("Logout Successfull.")
             return true;
-        } else {
-            ErrorToast("Something Went Wrong")
-            return false;
         }
+        ErrorToast("Something Went Wrong")
+        return false;
     }).catch((err) => {
         store.dispatch(hideLoader())
         ErrorToast("Something Went Wrong")

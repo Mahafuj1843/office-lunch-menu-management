@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { ErrorToast, IsEmail, IsEmpty, IsPassword } from '../helpers/formHelper';
-import { RegistrationRequest } from '../apiRequests/authRequest';
+import { RegistrationRequest } from '../apiRequest/authRequest';
 
 const RegistrationPage = () => {
     let navigate = useNavigate();
