@@ -71,6 +71,16 @@ npm i
 # or
 yarn
 ```
+Migrate database schema:
+
+```bash
+npx prisma migrate dev --name init
+```
+Generate the Prisma client:
+
+```bash
+npx prisma generate
+```
 
 Then, install all dependency for Frontend:
 
